@@ -160,9 +160,14 @@ public class Calculator {
 	 * @param values	Array of Integers to be exponentiated
 	 * @throws Exception
 	 */
-	static private void exp(int[] values) throws Exception {
+	static public void exp(int[] values) throws Exception {
 		history.add(new HistoryCommand("exp", values));
-		System.out.println(Math.pow(values[0], values[1]));
+		if(values[1]<0){
+			System.out.println(0);
+		}else{
+			System.out.println((int)Math.pow(values[0], values[1]));
+		}
+		
 	}
 
 	/**
@@ -173,10 +178,14 @@ public class Calculator {
 	static class HistoryCommand {
 		public String command;
 		public int[] values;
+		public double result;
 
 		public HistoryCommand(String command, int[] values) {
 			this.command = command;
 			this.values = values;
+		}
+		public HistoryCommand(String command, int[] values, double result){
+			
 		}
 		@Override
 		public String toString()
