@@ -29,6 +29,7 @@ public class Calculator {
 						String[] valuesStringArr = inputArr[1].split(",");
 						values = new double[valuesStringArr.length];
 						for(int i = 0; i < valuesStringArr.length; i++) {
+							//DJS
 							if(valuesStringArr[i].toCharArray()[0]=='!'){
 								int hist = Integer.parseInt(valuesStringArr[i].substring(1));		
 								values[i] = (history.get(hist)==null ? 0 : history.get(hist).result);
@@ -161,13 +162,13 @@ public class Calculator {
 		history = new ArrayList<HistoryCommand>();
 	}
 
-	/**
+	/**DJS
 	 * Exponentiates an array of Integers and prints out the result
 	 * 
 	 * @param values	Array of Integers to be exponentiated
 	 * @throws Exception
 	 */
-	public static double exp(double[] values) throws Exception {
+	public static double exp(double[] values) throws Exception{
 		
 		if(values[1]<0){
 			history.add(new HistoryCommand("exp", values,0));
@@ -178,21 +179,6 @@ public class Calculator {
 		
 		
 		
-		
-	}
-	
-	public ByteArrayOutputStream simulateInput(String in){
-		
-		PrintStream stdout = System.out;
-		final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(outContent));
-		
-		InputStream stdin = System.in;
-		System.setIn(new ByteArrayInputStream(in.getBytes()));
-		System.setIn(stdin);
-		
-		System.setOut(stdout);
-		return outContent;
 		
 	}
 
