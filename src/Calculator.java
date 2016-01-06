@@ -121,6 +121,14 @@ public class Calculator {
 	 */
 	static private void div(int[] values) throws Exception {
 		history.add(new HistoryCommand("div", values));
+		float res = values[0];
+		for(int i = 1; i< values.length; i++)
+		{
+			System.out.println(res);
+			res = res/values[i];
+		}
+		int r =(int)res;
+		System.out.println(r);
 	}
 
 	/**
