@@ -96,7 +96,7 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	static private void add(int[] values) throws Exception {
-		history.add(new HistoryCommand("add", values));
+		history.add(new HistoryCommand("add", values,0));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	static private void sub(int[] values) throws Exception {
-		history.add(new HistoryCommand("sub", values));
+		history.add(new HistoryCommand("sub", values,0));
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	static private void mul(int[] values) throws Exception {
-		history.add(new HistoryCommand("mul", values));
+		history.add(new HistoryCommand("mul", values,0));
 	}
 
 	/**
@@ -126,7 +126,6 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	static private void div(int[] values) throws Exception {
-		history.add(new HistoryCommand("div", values));
 		float res = values[0];
 		for(int i = 1; i< values.length; i++)
 		{
@@ -134,6 +133,7 @@ public class Calculator {
 			res = res/values[i];
 		}
 		int r =(int)res;
+		history.add(new HistoryCommand("div", values,r));
 		System.out.println(r);
 	}
 
@@ -142,8 +142,10 @@ public class Calculator {
 	 */
 	static private void hist() {
 		for(int i = 0; i< history.size(); i++){
-			System.out.println(i+": "+history.get(i));
+			System.out.println(i+": "+history.get(i) + (history.get(i).result==null ? "" : " = "+history.get(i).result));
 		}
+		
+
 
 	}
 
@@ -161,12 +163,15 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	static public void exp(int[] values) throws Exception {
-		history.add(new HistoryCommand("exp", values));
+		
 		if(values[1]<0){
 			System.out.println(0);
+			history.add(new HistoryCommand("exp", values,0));
 		}else{
 			System.out.println((int)Math.pow(values[0], values[1]));
+			history.add(new HistoryCommand("exp", values, Math.pow(values[0], values[1])));
 		}
+		
 		
 	}
 
@@ -178,14 +183,12 @@ public class Calculator {
 	static class HistoryCommand {
 		public String command;
 		public int[] values;
-		public double result;
+		public Double result;
 
-		public HistoryCommand(String command, int[] values) {
+		public HistoryCommand(String command, int[] values, double result){
 			this.command = command;
 			this.values = values;
-		}
-		public HistoryCommand(String command, int[] values, double result){
-			
+			this.result = result;
 		}
 		@Override
 		public String toString()
