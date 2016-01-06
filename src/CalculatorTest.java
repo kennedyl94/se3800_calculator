@@ -1,7 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 public class CalculatorTest {
-	@Ignore
 	@Test
 	//DJS
 	public void story1Test() throws Exception{
@@ -11,7 +10,6 @@ public class CalculatorTest {
 		assertEquals(6,Calculator.add(new double[]{1,2,3}),0);
 	}
 	//DJS
-	@Ignore
 	@Test
 	public void story2Test() throws Exception{
 		assertEquals(-1,Calculator.sub(new double[]{1,2}),0);
@@ -19,7 +17,6 @@ public class CalculatorTest {
 		assertEquals(1,Calculator.sub(new double[]{-1,-2}),0);
 	}
 	//DJS
-	@Ignore
 	@Test
 	public void story3Test() throws Exception{
 		assertEquals(6,Calculator.mul(new double[]{-3,-2}),0);
