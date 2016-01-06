@@ -167,7 +167,7 @@ public class Calculator {
 
 	/**
 	 *	This class represents a command stored in history.
-	 *	It manages the command, and the values for that command.
+	 *	It manages the command, and the values for that command. 
 	 *
 	 */
 	static class HistoryCommand {
