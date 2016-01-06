@@ -135,6 +135,9 @@ public class Calculator {
 	 * Prints out the command history
 	 */
 	static private void hist() {
+		for(int i = 0; i< history.size(); i++){
+			System.out.println(i+": "+history.get(i));
+		}
 
 	}
 
@@ -167,6 +170,16 @@ public class Calculator {
 		public HistoryCommand(String command, int[] values) {
 			this.command = command;
 			this.values = values;
+		}
+		@Override
+		public String toString()
+		{
+			String vals ="";
+			for(int i = 0; i<values.length; i++){
+				vals+=values[i]+",";
+			}
+			vals=vals.substring(0,vals.length()-1);
+			return this.command+" "+vals;
 		}
 	}
 }
