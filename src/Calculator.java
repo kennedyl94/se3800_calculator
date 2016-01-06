@@ -156,6 +156,7 @@ public class Calculator {
 	 */
 	static private void exp(int[] values) throws Exception {
 		history.add(new HistoryCommand("exp", values));
+		System.out.println(Math.pow(values[0], values[1]));
 	}
 
 	/**
