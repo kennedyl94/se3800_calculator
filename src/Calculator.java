@@ -20,17 +20,17 @@ public class Calculator {
 				try {
 					String[] inputArr = input.trim().split(" ");
 					String command = inputArr[0].toLowerCase();
-					int[] values = null;
+					double[] values = null;
 					if(inputArr.length > 1) {
 						String[] valuesStringArr = inputArr[1].split(",");
-						values = new int[valuesStringArr.length];
+						values = new double[valuesStringArr.length];
 						for(int i = 0; i < valuesStringArr.length; i++) {
+							//DJS
 							if(valuesStringArr[i].toCharArray()[0]=='!'){
-								int hist = Integer.parseInt(valuesStringArr[i].substring(1));
-								//Add method of getting value of previous command
-								values[i] = 0;
+								int hist = Integer.parseInt(valuesStringArr[i].substring(1));		
+								values[i] = (history.get(hist)==null ? 0 : history.get(hist).result);
 							}else{
-								values[i] = Integer.parseInt(valuesStringArr[i].trim());
+								values[i] = Double.parseDouble(valuesStringArr[i].trim());
 							}
 						}
 					}
@@ -54,24 +54,24 @@ public class Calculator {
 	 * @param values	Values to execute command on
 	 * @throws Exception
 	 */
-	static private void exec(String command, int[] values) throws Exception {
+	public static void exec(String command, double[] values) throws Exception {
 		if(command != null && command.length() > 0) {
 			switch (command) {
 			case "add":
 				if(values != null && values.length > 0)
-					add(values);
+					System.out.println(add(values));
 				break;
 			case "sub":
 				if(values != null && values.length > 0)
-					sub(values);
+					System.out.println(sub(values));
 				break;
 			case "mul":
 				if(values != null && values.length > 0)
-					mul(values);
+					System.out.println(mul(values));
 				break;
 			case "div":
 				if(values != null && values.length > 0)
-					div(values);
+					System.out.println(div(values));
 				break;
 			case "hist":
 				hist();
@@ -81,7 +81,7 @@ public class Calculator {
 				break;
 			case "exp":
 				if(values != null && values.length > 0)
-					exp(values);
+					System.out.println(exp(values));
 				break;
 			default:
 				throw new Exception("Unkown command");
@@ -95,8 +95,13 @@ public class Calculator {
 	 * @param values	Array of Integers to be added
 	 * @throws Exception
 	 */
-	static private void add(int[] values) throws Exception {
-		history.add(new HistoryCommand("add", values));
+	public static double add(double[] values) throws Exception {
+		double result = 0;
+		for(int i = 0; i < values.length; i++) {
+			result += values[i];
+		}
+		history.add(new HistoryCommand("add", values, result));
+		return result;
 	}
 
 	/**
@@ -105,8 +110,13 @@ public class Calculator {
 	 * @param values	Array of Integers to be subtracted
 	 * @throws Exception
 	 */
-	static private void sub(int[] values) throws Exception {
-		history.add(new HistoryCommand("sub", values));
+	public static double sub(double[] values) throws Exception {
+		double result = values[0];
+		for(int i = 1; i < values.length; i++) {
+			result -= values[i];
+		}
+		history.add(new HistoryCommand("sub", values, result));
+		return result;
 	}
 
 	/**
@@ -115,8 +125,14 @@ public class Calculator {
 	 * @param values	Array of Integers to be multiplied
 	 * @throws Exception
 	 */
-	static private void mul(int[] values) throws Exception {
-		history.add(new HistoryCommand("mul", values));
+	public static double mul(double[] values) throws Exception {
+		// Return 0 if no values were operated on
+		double result = values.length > 1 ? 1 : 0;
+		for(int i = 0; i < values.length; i++) {
+			result *= values[i];
+		}
+		history.add(new HistoryCommand("mul", values, result));
+		return result;
 	}
 
 	/**
@@ -125,58 +141,74 @@ public class Calculator {
 	 * @param values	Array of Integers to be divided
 	 * @throws Exception
 	 */
-	static private void div(int[] values) throws Exception {
-		history.add(new HistoryCommand("div", values));
-		float res = values[0];
+	public static double div(double[] values) throws Exception {
+		double res = values[0];
 		for(int i = 1; i< values.length; i++)
 		{
-			System.out.println(res);
 			res = res/values[i];
 		}
 		int r =(int)res;
-		System.out.println(r);
+		history.add(new HistoryCommand("div", values,r));
+		return r;
 	}
 
 	/**
 	 * Prints out the command history
 	 */
-	static private void hist() {
+	public static void hist() {
 		for(int i = 0; i< history.size(); i++){
-			System.out.println(i+": "+history.get(i));
+			System.out.println(i+": "+history.get(i) + (history.get(i).result==null ? "" : " = "+history.get(i).result));
 		}
+		
+
 
 	}
 
 	/**
 	 * Clears the command history
 	 */
-	static private void clear() {
+	public static void clear() {
 		history = new ArrayList<HistoryCommand>();
 	}
 
-	/**
+	/**DJS
 	 * Exponentiates an array of Integers and prints out the result
 	 * 
 	 * @param values	Array of Integers to be exponentiated
 	 * @throws Exception
 	 */
-	static private void exp(int[] values) throws Exception {
-		history.add(new HistoryCommand("exp", values));
-		System.out.println(Math.pow(values[0], values[1]));
+	public static double exp(double[] values) throws Exception{
+		
+		if(values[1]<0){
+			history.add(new HistoryCommand("exp", values,0));
+			return 0;
+		}
+		history.add(new HistoryCommand("exp", values, Math.pow(values[0], values[1])));
+		return (int)Math.pow(values[0], values[1]);
+		
+		
+		
+		
 	}
 
 	/**
 	 *	This class represents a command stored in history.
+<<<<<<< HEAD
 	 *	It manages the command, and the values for that command. 
+=======
+	 *	It manages the command, values for that command, and the result of the operation.
+>>>>>>> 062c82af6615e81713384324fd37dd011f442c01
 	 *
 	 */
 	static class HistoryCommand {
 		public String command;
-		public int[] values;
+		public double[] values;
+		public Double result;
 
-		public HistoryCommand(String command, int[] values) {
+		public HistoryCommand(String command, double[] values, double result){
 			this.command = command;
 			this.values = values;
+			this.result = result;
 		}
 		@Override
 		public String toString()

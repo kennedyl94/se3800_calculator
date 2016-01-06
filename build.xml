@@ -3,14 +3,19 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="SE3800_Calc">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="se3800_calculator">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../program files/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="SE3800_Calc.classpath">
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="lib/junit.jar"/>
+        <pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="se3800_calculator.classpath">
         <pathelement location="bin"/>
+        <path refid="JUnit 4.libraryclasspath"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -24,13 +29,13 @@
         <delete dir="bin"/>
     </target>
     <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
+    <target depends="build-subprojects,build-project,CalculatorTest" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="SE3800_Calc.classpath"/>
+            <classpath refid="se3800_calculator.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -47,9 +52,25 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="CalculatorTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
+            <formatter type="xml"/>
+            <test name="CalculatorTest" todir="${junit.output.dir}"/>
+            <classpath refid="se3800_calculator.classpath"/>
+        </junit>
+    </target>
     <target name="Calculator">
         <java classname="Calculator" failonerror="true" fork="yes">
-            <classpath refid="SE3800_Calc.classpath"/>
+            <classpath refid="se3800_calculator.classpath"/>
         </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
     </target>
 </project>
