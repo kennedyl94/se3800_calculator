@@ -13,7 +13,7 @@ public class CalculatorTest {
 	@Test
 	public void story2Test() throws Exception{
 		assertEquals(-1,Calculator.sub(new double[]{1,2}),0);
-		assertEquals(-2,Calculator.sub(new double[]{-1,2}),0);
+		assertEquals(-3,Calculator.sub(new double[]{-1,2}),0);
 		assertEquals(1,Calculator.sub(new double[]{-1,-2}),0);
 	}
 	//DJS
@@ -21,7 +21,7 @@ public class CalculatorTest {
 	public void story3Test() throws Exception{
 		assertEquals(6,Calculator.mul(new double[]{-3,-2}),0);
 		assertEquals(-6,Calculator.mul(new double[]{-3,2}),0);
-		assertEquals(6,Calculator.mul(new double[]{-3,-3}),0);	
+		assertEquals(9,Calculator.mul(new double[]{-3,-3}),0);	
 		assertEquals(0,Calculator.mul(new double[]{3,0}),0);
 		assertEquals(6,Calculator.mul(new double[]{1,2,3}),0);
 	}

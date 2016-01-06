@@ -111,8 +111,8 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	public static double sub(double[] values) throws Exception {
-		double result = 0;
-		for(int i = 0; i < values.length; i++) {
+		double result = values[0];
+		for(int i = 1; i < values.length; i++) {
 			result -= values[i];
 		}
 		history.add(new HistoryCommand("sub", values, result));
