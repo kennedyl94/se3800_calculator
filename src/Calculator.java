@@ -25,7 +25,13 @@ public class Calculator {
 						String[] valuesStringArr = inputArr[1].split(",");
 						values = new int[valuesStringArr.length];
 						for(int i = 0; i < valuesStringArr.length; i++) {
-							values[i] = Integer.parseInt(valuesStringArr[i].trim());
+							if(valuesStringArr[i].toCharArray()[0]=='!'){
+								int hist = Integer.parseInt(valuesStringArr[i].substring(1));
+								//Add method of getting value of previous command
+								values[i] = 0;
+							}else{
+								values[i] = Integer.parseInt(valuesStringArr[i].trim());
+							}
 						}
 					}
 					exec(command, values);
@@ -71,7 +77,7 @@ public class Calculator {
 				hist();
 				break;
 			case "clear":
-				clear();
+				clear();	
 				break;
 			case "exp":
 				if(values != null && values.length > 0)
