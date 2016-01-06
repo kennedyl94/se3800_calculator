@@ -100,8 +100,12 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	public static double add(double[] values) throws Exception {
-		history.add(new HistoryCommand("add", values,0));
-		return 0;
+		double result = 0;
+		for(int i = 0; i < values.length; i++) {
+			result += values[i];
+		}
+		history.add(new HistoryCommand("add", values, result));
+		return result;
 	}
 
 	/**
@@ -111,8 +115,12 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	public static double sub(double[] values) throws Exception {
-		history.add(new HistoryCommand("sub", values,0));
-		return 0;
+		double result = 0;
+		for(int i = 0; i < values.length; i++) {
+			result -= values[i];
+		}
+		history.add(new HistoryCommand("sub", values, result));
+		return result;
 	}
 
 	/**
@@ -122,8 +130,13 @@ public class Calculator {
 	 * @throws Exception
 	 */
 	public static double mul(double[] values) throws Exception {
-		history.add(new HistoryCommand("mul", values,0));
-		return 0;
+		// Return 0 if no values were operated on
+		double result = values.length > 1 ? 1 : 0;
+		for(int i = 0; i < values.length; i++) {
+			result *= values[i];
+		}
+		history.add(new HistoryCommand("mul", values, result));
+		return result;
 	}
 
 	/**
@@ -184,7 +197,7 @@ public class Calculator {
 
 	/**
 	 *	This class represents a command stored in history.
-	 *	It manages the command, and the values for that command.
+	 *	It manages the command, values for that command, and the result of the operation.
 	 *
 	 */
 	static class HistoryCommand {
