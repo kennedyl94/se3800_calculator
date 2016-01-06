@@ -145,7 +145,7 @@ public class Calculator {
 	 * Clears the command history
 	 */
 	static private void clear() {
-
+		history = new ArrayList<HistoryCommand>();
 	}
 
 	/**
