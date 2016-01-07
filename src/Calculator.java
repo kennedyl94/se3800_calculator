@@ -159,7 +159,7 @@ public class Calculator {
 		double res = values[0];
 		for(int i = 1; i< values.length; i++)
 		{
-			res = res/values[i]+1;
+			res = res/values[i];
 		}
 		int r =(int)res;
 		history.add(new HistoryCommand("div", values,r));
