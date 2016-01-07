@@ -30,7 +30,7 @@ public class CalculatorTest {
 	public void story4Test() throws Exception{
 		assertEquals(2,Calculator.div(new double[]{4,2}),0);
 		assertEquals(-2,Calculator.div(new double[]{-4,2}),0);
-		assertEquals(2,Calculator.div(new double[]{-4,-2}),0);
+		assertEquals(2,Calculator.div(new double[]{-4,-2}),0); 
 		assertEquals(1,Calculator.div(new double[]{8,4,2}),0);
 	}
 	
