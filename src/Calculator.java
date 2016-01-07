@@ -13,7 +13,7 @@ public class Calculator {
 		Scanner in = new Scanner(System.in);
 		while(true){
 			System.out.println("Enter a command: ");
-			calc.next(in.nextLine());
+			System.out.println(calc.next(in.nextLine()));
 		}
 	}
 	
@@ -22,7 +22,7 @@ public class Calculator {
 	}
 	
 
-	public void next(String input) {
+	public String next(String input) {
 
 		if (!input.equals("exit")) {
 			if (input != null && input.length() > 0 && !input.equals("exit")) {
@@ -36,22 +36,27 @@ public class Calculator {
 						for(int i = 0; i < valuesStringArr.length; i++) {
 							//DJS
 							if(valuesStringArr[i].toCharArray()[0]=='!'){
-								int hist = Integer.parseInt(valuesStringArr[i].substring(1));		
-								values[i] = (history.get(hist)==null ? 0 : history.get(hist).result);
+								int hist = Integer.parseInt(valuesStringArr[i].substring(1));	
+								if(history.get(hist)==null){
+									throw new Exception();
+								}else{
+									values[i] = history.get(hist).result;
+								}
 							}else{
 								values[i] = Double.parseDouble(valuesStringArr[i].trim());
 							}
 						}
 					}
-					exec(command, values);
+					return exec(command, values);
 				} catch (Exception e) {
 					// If any error is thrown, ERR will be displayed
-					System.out.println("ERR");
+					return "ERR";
 				}
 			} else {
 				System.exit(-1);
 			}
 		}
+		return "";
 	}
 
 	/**
@@ -62,39 +67,40 @@ public class Calculator {
 	 * @param values	Values to execute command on
 	 * @throws Exception
 	 */
-	public  void exec(String command, double[] values) throws Exception {
+	public  String exec(String command, double[] values) throws Exception {
 		if(command != null && command.length() > 0) {
 			switch (command) {
 			case "add":
 				if(values != null && values.length > 0)
-					System.out.println(add(values));
+					return(Double.toString(add(values)));
 				break;
 			case "sub":
 				if(values != null && values.length > 0)
-					System.out.println(sub(values));
+					return(Double.toString(sub(values)));
 				break;
 			case "mul":
 				if(values != null && values.length > 0)
-					System.out.println(mul(values));
+					return(Double.toString(mul(values)));
 				break;
 			case "div":
 				if(values != null && values.length > 0)
-					System.out.println(div(values));
+					return(Double.toString(div(values)));
 				break;
-			case "hist":
-				System.out.println(hist());
-				break;
-			case "clear":
-				clear();	
-				break;
+			case "hist": 
+				return((hist()));
+			case "clear": 
+				clear();
+				return "";
 			case "exp":
 				if(values != null && values.length > 0)
-					System.out.println(exp(values));
+					return(Double.toString(exp(values)));
 				break;
 			default:
 				throw new Exception("Unkown command");
 			}
+			return "";
 		}
+		return "";
 	}
 
 	/**

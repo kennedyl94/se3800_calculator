@@ -49,6 +49,25 @@ public class CalculatorTest {
 		calc.add(new double[]{3,4});
 		assertTrue(calc.hist().equals("0: add 1.0,2.0 = 3.0\n1: add 3.0,4.0 = 7.0\n"));
 	}
+	//DJS
+	@Test
+	public void story6Test() throws Exception{
+		calc.add(new double[]{1,2});
+		calc.clear();
+		assertTrue(calc.hist().equals(""));
+		//Not sure how to test for clear console Acceptance Criteria
+	}
+	
+	//DJS
+	@Test
+	public void story7Test() throws Exception{
+		calc.add(new double[]{1,1});
+		calc.add(new double[]{1,1});
+		calc.add(new double[]{10,5});
+		assertTrue(calc.next("add 1,!2").equals("16.0"));
+		calc.clear();
+		assertTrue(calc.next("add 1,!2").equals("ERR"));
+	}
 	
 	//DJS
 	@Test
