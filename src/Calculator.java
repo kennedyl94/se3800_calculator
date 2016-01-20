@@ -127,7 +127,7 @@ public class Calculator {
 	public double sub(double[] values) throws Exception {
 		double result = values[0];
 		for(int i = 1; i < values.length; i++) {
-			result -= values[i];
+			result += values[i];
 		}
 		history.add(new HistoryCommand("sub", values, result));
 		return result;
